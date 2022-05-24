@@ -1,18 +1,29 @@
 package ru.TimShmykov.parser.model;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
+import javax.persistence.*;
+import java.util.List;
+
+@Entity
 @Data // генерирует геттеры сеттеры
-@AllArgsConstructor
+@Table(name = "category")
+@NoArgsConstructor
 public class Category {
+    @Id
+    @GeneratedValue(generator = "category_gen", strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "category_gen", sequenceName = "category_id_seq", allocationSize = 1)
     private Long id;
     private String name;
-    private String categoryUrl; //url уже имеется!
+    private String Url; //url уже имеется!
 
-    public Category(String name, String categoryUrl) {
+    @ManyToMany(mappedBy = "categories")
+    private List<Article> articles;
+
+    public Category(String name, String Url) {
         this.name = name;
-        this.categoryUrl = categoryUrl;
+        this.Url = Url;
     }
 }

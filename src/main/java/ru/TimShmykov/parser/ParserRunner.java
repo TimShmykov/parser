@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import ru.TimShmykov.parser.Service.Storage.ApplicationStorage;
 import ru.TimShmykov.parser.loader.Loader;
 import ru.TimShmykov.parser.loader.exception.LoadException;
 import ru.TimShmykov.parser.model.Article;
@@ -29,10 +30,7 @@ public class ParserRunner implements CommandLineRunner {
     private final Loader loader;
     // @Autowired
     private final HtmlParser htmlParser;
-    private final UserRepository userRepository;
-    private final CategoryRepository categoryRepository;
-    private final ArticleRepository articleRepository;
-    private final StatisticRepository statisticRepository;
+    private final ApplicationStorage applicationStorage;
 
     public static final String HABR_DOMAIN = "https://habr.com";
     private static final String HABR_URL = HABR_DOMAIN + "/ru/all/";
@@ -50,16 +48,7 @@ public class ParserRunner implements CommandLineRunner {
         try {
             String response = loader.load(HABR_URL);
             List<Article> articles = htmlParser.parse(response);
-            articleRepository.saveArticle(articles);
-            List<User> users = articles.stream().map(Article::getUser).collect(Collectors.toList());
-            userRepository.saveUsers(users);
-
-            List<Category> categories = articles.stream().flatMap(article -> article.getCategories().stream()).collect(Collectors.toList());
-            //List<List<Category>> collect = articles.stream().map(Article::getCategories).collect(Collectors.toList());
-            categoryRepository.saveCategory(categories);
-            List<Statistic> statistics = articles.stream().map(Article::getStatistic).collect(Collectors.toList());
-            statisticRepository.saveStatistic(statistics);
-            
+            applicationStorage.saveData(articles);
 
         } catch (LoadException e) {
             e.printStackTrace();
