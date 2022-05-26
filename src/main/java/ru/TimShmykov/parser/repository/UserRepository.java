@@ -1,17 +1,18 @@
 package ru.TimShmykov.parser.repository;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.CrudRepository;
-import org.springframework.jdbc.core.BatchPreparedStatementSetter;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.TimShmykov.parser.model.User;
 
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
-public interface UserRepository extends CrudRepository <User, Long> {
+public interface UserRepository extends JpaRepository<User, Long> {
+
+    // boolean existByUsername(String username);
+    List<User> getUserById(Long id);
+
+    Optional<User> findByUsername(String username);
 
 }

@@ -1,6 +1,7 @@
 package ru.TimShmykov.parser.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,6 +20,7 @@ public class Category {
     private String name;
     private String Url; //url уже имеется!
 
+    @JsonIgnore // не уходит в рекурсию!
     @ManyToMany(mappedBy = "categories")
     private List<Article> articles;
 

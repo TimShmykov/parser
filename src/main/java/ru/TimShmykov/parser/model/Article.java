@@ -1,16 +1,16 @@
 package ru.TimShmykov.parser.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.ZonedDateTime;
 import java.util.List;
 
-@Entity
+@Entity // сущность
 @Data // генерирует геттеры сеттеры
 @Table(name = "article")
-@AllArgsConstructor
+@NoArgsConstructor
 public class Article {
 
     @Id
@@ -20,8 +20,8 @@ public class Article {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
-    @Column(name = "publish_Date") // исправляем ошибку нет артикля с названием publish_Date
-    private ZonedDateTime publish_Date;
+//    @Column(name = "publish_Date") // исправляем ошибку нет артикля с названием publish_Date
+    private ZonedDateTime publishDate;
     @ManyToMany
     @JoinTable(
             name = "articles_categories", //название таблички связи
@@ -36,9 +36,9 @@ public class Article {
     @JoinColumn(name = "statistic_id")
     private Statistic statistic;
 
-    public Article(User user, ZonedDateTime publish_Date, List<Category> categories, String title, String description, String url, Statistic statistic) {
+    public Article(User user, ZonedDateTime publishDate, List<Category> categories, String title, String description, String url, Statistic statistic) {
         this.user = user;
-        this.publish_Date = publish_Date;
+        this.publishDate = publishDate;
         this.categories = categories;
         this.title = title;
         this.description = description;

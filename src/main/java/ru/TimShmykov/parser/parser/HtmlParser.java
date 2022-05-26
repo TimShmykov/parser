@@ -25,7 +25,7 @@ public class HtmlParser {
 
         List<Article> articles = new ArrayList<>();
         for (Element articleEl : articleEls) {
-            System.out.println(articleEl.text());
+//            System.out.println(articleEl.text());
             String username = articleEl.select(".tm-user-info__username").text();
 
             Elements titleEL = articleEl.select(".tm-article-snippet__title-link");

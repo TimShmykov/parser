@@ -1,34 +1,27 @@
 package ru.TimShmykov.parser;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import ru.TimShmykov.parser.Service.Storage.ApplicationStorage;
+import ru.TimShmykov.parser.Service.storage.ApplicationStorage;
 import ru.TimShmykov.parser.loader.Loader;
 import ru.TimShmykov.parser.loader.exception.LoadException;
 import ru.TimShmykov.parser.model.Article;
-import ru.TimShmykov.parser.model.Category;
-import ru.TimShmykov.parser.model.Statistic;
-import ru.TimShmykov.parser.model.User;
 import ru.TimShmykov.parser.parser.HtmlParser;
-import ru.TimShmykov.parser.repository.ArticleRepository;
-import ru.TimShmykov.parser.repository.CategoryRepository;
-import ru.TimShmykov.parser.repository.StatisticRepository;
-import ru.TimShmykov.parser.repository.UserRepository;
 
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @SpringBootApplication
 public class ParserRunner implements CommandLineRunner {
 
 
-    // @Autowired // вставляет единственный экземпляр загрузчика, но это плохой тон
+    // @Autowired вставляет единственный экземпляр загрузчика, но это плохой тон
     private final Loader loader;
-    // @Autowired
     private final HtmlParser htmlParser;
     private final ApplicationStorage applicationStorage;
 
@@ -53,5 +46,16 @@ public class ParserRunner implements CommandLineRunner {
         } catch (LoadException e) {
             e.printStackTrace();
         }
+
+
+
+        //   try (FileOutputStream outputStream = new FileOutputStream("/var/www/data.txt")) { // потоки
+            //       String s = "Sadsafdsvds";
+            //       outputStream.write(s.getBytes()); // пишет в файл с замещением
+            //   } catch (IOException e) {
+            //       System.out.println(e.getMessage());
+            //   }
+
+
     }
 }

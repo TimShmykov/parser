@@ -26,10 +26,12 @@ CREATE TABLE article (
         id          BIGSERIAL    PRIMARY KEY,
         user_id     BIGINT      NOT NULL REFERENCES users (id),
         statistic_id BIGINT     NOT NULL REFERENCES statistic(id),
-        publish_Date TIMESTAMP   NOT NULL,
+        publish_date TIMESTAMP   NOT NULL,
         title       VARCHAR     NOT NULL,
         description VARCHAR     NOT NULL,
-        url         VARCHAR     NOT NULL
+        url         VARCHAR     NOT NULL,
+        UNIQUE (user_id, title)
+
     );
 
 
